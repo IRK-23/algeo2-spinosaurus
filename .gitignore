@@ -1,0 +1,3 @@
+data/*
+!data/.gitkeep
+/src/frontend/node_modules
