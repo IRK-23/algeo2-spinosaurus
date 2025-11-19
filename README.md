@@ -1,6 +1,31 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/WQhgEYKW)
 # Template Tugas Besar 2 Aljabar Linier dan Geometri
 
+## Cara Menjalankan Program
+
+1. [Install node.js dan npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) kalau belum.
+2. Clone repository ini.
+
+    ```bash
+    git clone https://github.com/IRK-23/algeo2-spinosaurus.git
+    ```
+
+3. Pindah ke folder backend, install requirements.txt, jalankan app.py
+
+    ```bash
+    cd src/backend
+    pip install -r requirements.txt
+    python app.py
+    ```
+
+4. Pindah ke folder frontend, install package dengan npm, jalankan frontend
+
+    ```bash
+    cd ../frontend
+    npm install
+    npm run dev
+    ```
+
 ## How to Develop
 The template base file structure is as below
 ```
