@@ -3,7 +3,7 @@
 
 ## Cara Menjalankan Program
 
-1. [Install node.js dan npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) kalau belum.
+1. Install [node.js, npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), dan [Python](https://www.python.org/downloads/) kalau belum.
 2. Clone repository ini.
 
     ```bash
