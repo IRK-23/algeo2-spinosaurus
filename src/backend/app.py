@@ -12,9 +12,9 @@ def create_app():
     CORS(app)
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DATA_DIR = os.path.join(BASE_DIR, '../../data')
+    DATA_DIR = os.path.abspath(os.path.join(BASE_DIR, '../../data'))
 
-    pipeline = Preprocessing(data_dir="../../../data/", cache_dir="./cache", k=100)
+    pipeline = Preprocessing(data_dir=DATA_DIR, cache_dir="./cache", k=100)
     pipeline.initialize()
 
     @app.route('/')
