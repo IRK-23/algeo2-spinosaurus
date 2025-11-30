@@ -22,6 +22,10 @@
 
     ```bash
     cd src/frontend
+
+    # Kalau pakai nvm di Linux:
+    source ~/.nvm/nvm.sh
+
     npm install
     npm run dev
     ```
