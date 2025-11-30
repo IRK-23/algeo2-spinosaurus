@@ -39,14 +39,3 @@ def load_dataset(data_dir: str = "../../../data/") -> List[Dict[str, str]]:
 
     return books
 
-
-def get_book_by_id(books: List[Dict[str, str]], book_id: str) -> Dict[str, str]:
-    for book in books:
-        if book["id"] == book_id:
-            return book
-    return None
-
-
-
-
-    

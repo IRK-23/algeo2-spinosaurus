@@ -58,19 +58,6 @@ class DocumentIndexer:
 
         return self.term_doc_matrix
 
-    def get_term_index(self, term: str) -> int:
-        return self.vocabulary.get(term, -1)
-
-    def get_term_by_index(self, index: int) -> str:
-        if 0 <= index < len(self.term_list):
-            return self.term_list[index]
-        return None
-
-    def get_document_vector(self, doc_idx: int) -> np.ndarray:
-        return self.term_doc_matrix[:, doc_idx].toarray().flatten()
-
-    def get_term_vector(self, term_idx: int) -> np.ndarray:
-        return self.term_doc_matrix[term_idx, :].toarray().flatten()
 
 
 def build_matrix_from_documents(preprocessed_documents: List[List[str]]) -> Tuple[csr_matrix, Dict[str, int], List[str]]:

@@ -34,7 +34,7 @@ class TextPreprocessor:
         tokens = word_tokenize(text)
 
         tokens = [re.sub(r'[^a-z]', '', token.lower()) for token in tokens]
-        tokens = [t for t in tokens if t]  # non empty strings
+        tokens = [t for t in tokens if t]  # non empty str
 
         tokens = [self.stemmer.stem(token) for token in tokens]
 
