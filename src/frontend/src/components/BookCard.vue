@@ -48,19 +48,14 @@ const goToDetail = () => {
 	overflow: hidden;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	background: white;
+	background: #1D1B20;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 }
 
-.book-card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
 .image-container {
-	aspect-ratio: 2/3;
+	/* aspect-ratio: 2/3; */
 	overflow: hidden;
 	background: #f5f5f5;
 	position: relative;
@@ -90,7 +85,7 @@ h3 {
 	font-size: 1rem;
 	font-weight: 600;
 	line-height: 1.4;
-	color: #2c3e50;
+	color: #F7F2FA;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	line-clamp: 2;

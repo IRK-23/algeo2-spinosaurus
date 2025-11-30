@@ -1,15 +1,16 @@
 <template>
 	<div class="home">
 		<div class="hero">
-			<h1>E-Library</h1>
+			<h1>Spinosaurus E-Library</h1>
 			<div class="search-bar">
 				<input 
 					v-model="searchQuery" 
 					@keyup.enter="handleSearch" 
 					type="text" 
-					placeholder="Search books by title..." 
+					placeholder="Search books by title..."
+					class="m3-search-bar"
 				/>
-				<button @click="handleSearch">Search</button>
+				<button @click="handleSearch" class="m3-btn">Search</button>
 			</div>
 		</div>
 
@@ -32,6 +33,7 @@
 				<button 
 					:disabled="currentPage === 1" 
 					@click="changePage(currentPage - 1)"
+					class="m3-btn"
 				>
 					Previous
 				</button>
@@ -39,6 +41,7 @@
 				<button 
 					:disabled="currentPage === totalPages" 
 					@click="changePage(currentPage + 1)"
+					class="m3-btn"
 				>
 					Next
 				</button>
@@ -111,7 +114,7 @@ onMounted(() => {
 
 h1 {
 	font-size: 2.5rem;
-	color: #2c3e50;
+	color: #F7F2FA;
 	margin-bottom: 1.5rem;
 }
 
@@ -131,6 +134,12 @@ input {
 	font-size: 1rem;
 	transition: border-color 0.3s;
 }
+.m3-search-bar {
+	background-color: #2B2930;
+	color: #CAC4D0;
+	border-radius: 9999px;
+	border: none;
+}
 
 input:focus {
 	outline: none;
@@ -147,14 +156,29 @@ button {
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
+.m3-btn {
+	padding: 0.5rem 1rem;
+	background-color: #D0BCFF;
+	color: #381E72;
+	border: none;
+	border-radius: 9999px;
+	font-size: 18px;
+	font-weight: 500;
+	cursor: pointer;
+}
 
 button:hover {
-	background-color: #3aa876;
+	background-color: #B69DF8;
 }
 
 button:disabled {
-	background-color: #a8d5c2;
+	background-color: #CCC2DC;
+	color: #332D41;
 	cursor: not-allowed;
+}
+
+span {
+	color: #F7F2FA;
 }
 
 .books-grid {

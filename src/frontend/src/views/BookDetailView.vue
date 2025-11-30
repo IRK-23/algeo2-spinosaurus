@@ -127,7 +127,7 @@ watch(() => route.params.id, (newId) => {
 h1 {
 	font-size: 2.5rem;
 	margin-bottom: 2rem;
-	color: #2c3e50;
+	color: #f7f2fa;
 }
 
 .content-preview {
@@ -150,7 +150,7 @@ h1 {
 .recommendations h2 {
 	font-size: 2rem;
 	margin-bottom: 2rem;
-	color: #2c3e50;
+	color: #f7f2fa;
 	border-bottom: 2px solid #eee;
 	padding-bottom: 1rem;
 }
