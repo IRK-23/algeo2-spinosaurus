@@ -21,7 +21,11 @@
 4. Pindah ke folder frontend, install package dengan npm, jalankan frontend
 
     ```bash
-    cd ../frontend
+    cd src/frontend
+
+    # Kalau pakai nvm di Linux:
+    source ~/.nvm/nvm.sh
+
     npm install
     npm run dev
     ```
