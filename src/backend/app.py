@@ -1,29 +1,21 @@
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
+from lsa.preprocessing import Preprocessing
 import json
 import os
 
+pipeline = None
+
 def create_app():
+    global pipeline
     app = Flask(__name__)
     CORS(app)
 
-    # Load data
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     DATA_DIR = os.path.join(BASE_DIR, '../../data')
-    MAPPER_PATH = os.path.join(DATA_DIR, 'mapper.json')
-    
-    try:
-        with open(MAPPER_PATH, 'r') as f:
-            books_data = json.load(f)
-    except FileNotFoundError:
-        print(f"Warning: {MAPPER_PATH} not found. Starting with empty data.")
-        books_data = {}
-    
-    # Convert dict to list for easier pagination/searching
-    books_list = []
-    for id, info in books_data.items():
-        info['id'] = id
-        books_list.append(info)
+
+    pipeline = Preprocessing(data_dir="../../../data/", cache_dir="./cache", k=100)
+    pipeline.initialize()
 
     @app.route('/')
     def hello():
@@ -34,15 +26,15 @@ def create_app():
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 20))
         search_query = request.args.get('search', '').lower()
-        
-        filtered_books = books_list
+
+        filtered_books = pipeline.books
         if search_query:
-            filtered_books = [b for b in books_list if search_query in b['title'].lower()]
-            
+            filtered_books = [b for b in pipeline.books if search_query in b['title'].lower()]
+
         total_books = len(filtered_books)
         start = (page - 1) * per_page
         end = start + per_page
-        
+
         return jsonify({
             'books': filtered_books[start:end],
             'total': total_books,
@@ -52,11 +44,9 @@ def create_app():
 
     @app.route('/api/books/<book_id>', methods=['GET'])
     def get_book_detail(book_id):
-        book = books_data.get(book_id)
+        book = pipeline.get_book_by_id(book_id)
         if book:
-            response_data = book.copy()
-            response_data['id'] = book_id
-            return jsonify(response_data)
+            return jsonify(book)
         return jsonify({'error': 'Buku tidak ketemu'}), 404
 
     @app.route('/data/<path:filename>')
@@ -70,25 +60,26 @@ def create_app():
         # Seharusnya ini memproses gambar yg diupload
         # Utk sementara return buku random
         import random
-        results = random.sample(books_list, min(len(books_list), 5)) if books_list else []
+        results = random.sample(pipeline.books, min(len(pipeline.books), 5)) if pipeline.books else []
         # Similarity score sementara/dummy
         for res in results:
             res['similarity'] = round(random.uniform(0.7, 0.99), 2)
-        return jsonify({
-            'results': results
-        })
+        return jsonify({'results': results})
 
     @app.route('/api/books/<book_id>/recommendations', methods=['GET'])
     def get_recommendations(book_id):
-        # Placeholder sementara rekomendasi LSA
-        import random
-        recommendations = random.sample(books_list, min(len(books_list), 5)) if books_list else []
-        return jsonify({
-            'recommendations': recommendations
-        })
+        book = pipeline.get_book_by_id(book_id)
+        if not book:
+            return jsonify({'error': 'Buku tidak ketemu'}), 404
+
+        book_idx = book['index']
+        recommendations = pipeline.get_book_recommendations(book_idx, top_k=5)
+
+        return jsonify({'recommendations': recommendations})
 
     return app
 
 if __name__ == '__main__':
     app = create_app()
     app.run(debug=True, port=5000)
+
