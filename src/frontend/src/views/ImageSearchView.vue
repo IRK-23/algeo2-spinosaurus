@@ -22,7 +22,7 @@
 				/>
 			</div>
 
-			<button @click="searchImage" :disabled="!selectedFile || loading">
+			<button @click="searchImage" :disabled="!selectedFile || loading" class="m3-btn">
 				{{ loading ? 'Searching...' : 'Search' }}
 			</button>
 		</div>
@@ -98,6 +98,10 @@ const searchImage = async () => {
 </script>
 
 <style scoped>
+h1 {
+	color: #f7f2fa;
+}
+
 .image-search {
 	max-width: 1200px;
 	margin: 0 auto;
@@ -111,7 +115,8 @@ const searchImage = async () => {
 	align-items: center;
 	gap: 2rem;
 	margin-bottom: 3rem;
-	background: #f9f9f9;
+	background: #211F26;
+	color: #E6E0E9;
 	padding: 2rem;
 	border-radius: 12px;
 }
@@ -128,13 +133,12 @@ input[type="file"] {
 }
 
 .custom-file-upload {
-	border: 2px dashed #ccc;
+	border: 2px dashed #E6E0E9;
 	display: inline-block;
 	padding: 1rem 2rem;
 	cursor: pointer;
 	border-radius: 8px;
 	transition: all 0.3s;
-	background: white;
 }
 
 .custom-file-upload:hover {
@@ -163,12 +167,23 @@ button {
 	transition: background-color 0.3s;
 }
 
-button:hover {
-	background-color: #3aa876;
+.m3-btn {
+	padding: 0.5rem 1rem;
+	background-color: #D0BCFF;
+	color: #381E72;
+	border: none;
+	border-radius: 9999px;
+	font-size: 18px;
+	font-weight: 500;
+	cursor: pointer;
 }
 
-button:disabled {
-	background-color: #a8d5c2;
+.m3-btn:hover {
+	background-color: #B69DF8;
+}
+
+.m3-btn:disabled {
+	background-color: #CCC2DC;
 	cursor: not-allowed;
 }
 

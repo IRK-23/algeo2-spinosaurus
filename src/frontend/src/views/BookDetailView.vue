@@ -131,7 +131,8 @@ h1 {
 }
 
 .content-preview {
-	background: #f9f9f9;
+	background: #211F26;
+	color: #f7f2fa;
 	padding: 2rem;
 	border-radius: 12px;
 }
@@ -141,9 +142,9 @@ h1 {
     font-family: monospace;
     max-height: 500px;
     overflow-y: auto;
-    background: #fff;
+    background: #211F26;
     padding: 1rem;
-    border: 1px solid #eee;
+    border: 1px solid #938F99;
     border-radius: 4px;
 }
 
