@@ -70,7 +70,7 @@ const fetchBooks = async () => {
 			search: searchQuery.value
 		}).toString();
 		
-		const response = await fetch(`http://localhost:5000/api/books?${query}`);
+		const response = await fetch(`http://127.0.0.1:5000/api/books?${query}`);
 		const data = await response.json();
 		
 		books.value = data.books;

@@ -81,7 +81,7 @@ const searchImage = async () => {
 	formData.append('threshold', threshold.value / 100);
 
 	try {
-		const response = await fetch('http://localhost:5000/api/search/image', {
+		const response = await fetch('http://127.0.0.1:5000/api/search/image', {
 			method: 'POST',
 			body: formData
 		});
