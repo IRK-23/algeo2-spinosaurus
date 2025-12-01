@@ -10,12 +10,14 @@
     git clone https://github.com/IRK-23/algeo2-spinosaurus.git
     ```
 
-3. Pindah ke folder backend, install requirements.txt, jalankan app.py
+3. Pindah ke folder backend, install requirements.txt, kembali ke algeo2-spinosaurus, jalankan app.py
 
     ```bash
     cd src/backend
     pip install -r requirements.txt
-    python app.py
+    cd ..
+    cd ..
+    python -m src.backend.app
     ```
 
 4. Pindah ke folder frontend, install package dengan npm, jalankan frontend
