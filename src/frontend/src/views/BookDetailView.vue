@@ -53,7 +53,7 @@ const fetchBook = async (id) => {
 		const response = await fetch(`http://localhost:5000/api/books/${id}`);
 		if (response.ok) {
 			book.value = await response.json();
-            
+
             if (book.value.txt) {
                 fetch(`http://localhost:5000/data/${book.value.txt}`)
                     .then(res => res.text())

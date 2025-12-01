@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
-from lsa.preprocessing import Preprocessing
+from .lsa.preprocessing import Preprocessing
 import json
 import os
 
@@ -46,6 +46,13 @@ def create_app():
     def get_book_detail(book_id):
         book = pipeline.get_book_by_id(book_id)
         if book:
+            mapper_path = os.path.join(DATA_DIR, 'mapper.json')
+            with open(mapper_path, 'r', encoding='utf-8') as f:
+                mapper = json.load(f)
+
+            if book_id in mapper:
+                book['txt'] = mapper[book_id].get('txt', '')
+
             return jsonify(book)
         return jsonify({'error': 'Buku tidak ketemu'}), 404
 

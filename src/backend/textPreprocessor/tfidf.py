@@ -24,7 +24,7 @@ class Tfidf:
 
         doc_lengths = np.array(term_doc_matrix.sum(axis=0)).flatten()
         doc_lengths[doc_lengths == 0] = 1
-        tf_matrix = term_doc_matrix.multiply(1.0 / doc_lengths)
+        tf_matrix = term_doc_matrix.multiply(1.0 / doc_lengths).tocsr()
 
         # TF-IDF = diag(IDF) * TF
         # Manual multiplication

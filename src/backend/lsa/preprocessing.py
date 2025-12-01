@@ -41,19 +41,25 @@ class Preprocessing:
             return json.load(f)
 
     def run_full_preprocessing(self):
+        print("Loading docs...")
         self.books = load_dataset(self.data_dir)
 
         documents = [book['content'] for book in self.books]
 
+        print("Preprocessing...")
         preprocessed_docs = preprocess_documents(documents)
 
+        print("Building matrix...")
         term_doc_matrix, vocabulary, term_list = build_matrix_from_documents(preprocessed_docs)
 
+        print("Computing TF-IDF...")
         tfidf_matrix, idf_vector = compute_tfidf(term_doc_matrix)
 
+        print("Applying LSA...")
         self.lsa_model = LSAModel(k=self.k)
         self.lsa_model.fit(tfidf_matrix)
 
+        print("Caching...")
         os.makedirs(self.cache_dir, exist_ok=True)
         self.lsa_model.save(self.cache_dir)
         self.save_books_metadata()
