@@ -68,15 +68,21 @@ class PCAPreprocessing:
         if not self.pca_model:
             return []
 
-        indices = self.pca_model.find_similar_to_uploaded(image_path, top_k)
+        indices, distances = self.pca_model.find_similar_to_uploaded(image_path, top_k)
 
         recommendations = []
-        for idx in indices:
+        for i, idx in enumerate(indices):
             book = self.books[int(idx)]
+            # Normalisasi jarak ke skor kemiripan (0-1)
+            # Pakai toleransi kecil krn 1-(distances[i]/100000) bisa tdk tepat 1.0
+            if distances[i] < 1e-5: similarity = 1.0
+            else: similarity = max(0, 1-(distances[i]/100000))
+            
             recommendations.append({
                 'id': book['id'],
                 'title': book['title'],
-                'cover': book['cover']
+                'cover': book['cover'],
+                'similarity': similarity
             })
 
         return recommendations

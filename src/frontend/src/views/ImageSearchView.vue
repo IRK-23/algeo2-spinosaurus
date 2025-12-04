@@ -98,7 +98,7 @@ const searchImage = async () => {
 </script>
 
 <style scoped>
-h1 {
+h1, h2 {
 	color: #f7f2fa;
 }
 

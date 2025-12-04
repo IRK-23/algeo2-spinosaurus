@@ -1,3 +1,5 @@
 data/*
 !data/.gitkeep
 /src/frontend/node_modules
+__pycache__/
+*.pyc

@@ -87,7 +87,7 @@ class PCA:
 		img_coeffs = np.matmul(self.uMatrix.T, img_vector)
 		return img_coeffs
 
-	def find_similar_to_uploaded(self, image_path, n=5) -> np.ndarray:
+	def find_similar_to_uploaded(self, image_path, n=5) -> Tuple[np.ndarray, np.ndarray]:
 		img_coeffs = self.process_uploaded_image(image_path)
 		dArray = np.zeros((self.N_ENTRIES, 2))
 		for x in range(self.N_ENTRIES):
@@ -95,10 +95,12 @@ class PCA:
 			dArray[x, 1] = x
 		indices = dArray[:, 0].argsort()
 		sorted_dArray = dArray[indices]
-		out = np.zeros(n)
+		out_indices = np.zeros(n)
+		out_distances = np.zeros(n)
 		for i in range(n):
-			out[i] = sorted_dArray[i, 1]
-		return out
+			out_indices[i] = sorted_dArray[i, 1]
+			out_distances[i] = sorted_dArray[i, 0]
+		return out_indices, out_distances
 
 	def calculate_pca(self, idx, n) -> np.ndarray:
 		dArray = np.zeros((self.N_ENTRIES, 2))
