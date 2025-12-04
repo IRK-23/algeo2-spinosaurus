@@ -3,11 +3,11 @@
 		<h1>Search by Image</h1>
 		
 		<div class="search-controls">
-			<div class="upload-section">
-				<label for="file-upload" class="custom-file-upload">
+			<div class="upload-section" @dragover.prevent @drop.prevent="dropHandler">
+				<label for="file-input" class="custom-file-upload">
 					<i class="icon-upload"></i> Upload Cover Image
 				</label>
-				<input id="file-upload" type="file" @change="handleFileUpload" accept="image/*" />
+				<input type="file" id="file-input" @change="handleFileUpload" accept="image/*" />
 				<span v-if="selectedFile">{{ selectedFile.name }}</span>
 			</div>
 
@@ -70,6 +70,16 @@ const handleFileUpload = (event) => {
 	}
 };
 
+const dropHandler = (event) => {
+	const file = event.dataTransfer.files[0];
+	if (file && file.type.startsWith('image/')) {
+		selectedFile.value = file;
+		previewUrl.value = URL.createObjectURL(file);
+		results.value = [];
+		searched.value = false;
+	}
+};
+
 const searchImage = async () => {
 	if (!selectedFile.value) return;
 
@@ -81,7 +91,7 @@ const searchImage = async () => {
 	formData.append('threshold', threshold.value / 100);
 
 	try {
-		const response = await fetch('http://127.0.0.1:5000/api/search/image', {
+		const response = await fetch('http://localhost:5000/api/search/image', {
 			method: 'POST',
 			body: formData
 		});
