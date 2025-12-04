@@ -43,19 +43,19 @@ const loadingRecs = ref(false);
 
 const imageUrl = computed(() => {
 	if (!book.value || !book.value.cover) return 'https://via.placeholder.com/300x450?text=No+Cover';
-	return `http://127.0.0.1:5000/data/${book.value.cover}`;
+	return `http://localhost:5000/data/${book.value.cover}`;
 });
 
 const fetchBook = async (id) => {
 	loading.value = true;
     bookContent.value = '';
 	try {
-		const response = await fetch(`http://127.0.0.1:5000/api/books/${id}`);
+		const response = await fetch(`http://localhost:5000/api/books/${id}`);
 		if (response.ok) {
 			book.value = await response.json();
 
             if (book.value.txt) {
-                fetch(`http://127.0.0.1:5000/data/${book.value.txt}`)
+                fetch(`http://localhost:5000/data/${book.value.txt}`)
                     .then(res => res.text())
                     .then(text => bookContent.value = text)
                     .catch(err => console.error('Error loading text:', err));
@@ -73,7 +73,7 @@ const fetchBook = async (id) => {
 const fetchRecommendations = async (id) => {
 	loadingRecs.value = true;
 	try {
-		const response = await fetch(`http://127.0.0.1:5000/api/books/${id}/recommendations`);
+		const response = await fetch(`http://localhost:5000/api/books/${id}/recommendations`);
 		const data = await response.json();
 		recommendations.value = data.recommendations;
 	} catch (error) {
