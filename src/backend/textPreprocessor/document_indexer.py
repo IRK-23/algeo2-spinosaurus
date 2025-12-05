@@ -56,7 +56,7 @@ class DocumentIndexer:
         self.term_doc_matrix = csr_matrix(
             (data, (rows, cols)),
             shape=(self.num_terms, self.num_documents),
-            dtype=np.float64
+            dtype=np.float32
         )
 
 
