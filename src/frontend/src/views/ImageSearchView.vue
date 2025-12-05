@@ -5,7 +5,7 @@
 		<div class="search-controls">
 			<div class="upload-section" @dragover.prevent @drop.prevent="dropHandler">
 				<label for="file-input" class="custom-file-upload">
-					<i class="icon-upload"></i> Upload Cover Image
+					Upload Cover Image
 				</label>
 				<input type="file" id="file-input" @change="handleFileUpload" accept="image/*" />
 				<span v-if="selectedFile">{{ selectedFile.name }}</span>
@@ -111,8 +111,9 @@ const searchImage = async () => {
 h1, h2 {
 	color: #f7f2fa;
 }
+
 .no-results {
-	color: #E6E0E9;
+	color: #f7f2fa;
 	font-size: 1.5rem;
 }
 
@@ -127,10 +128,10 @@ h1, h2 {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 2rem;
+	gap: 1rem;
 	margin-bottom: 3rem;
 	background: #211F26;
-	color: #E6E0E9;
+	color: #f7f2fa;
 	padding: 2rem;
 	border-radius: 12px;
 }
@@ -147,17 +148,17 @@ input[type="file"] {
 }
 
 .custom-file-upload {
-	border: 2px dashed #E6E0E9;
+	border: 2px dashed #f7f2fa;
 	display: inline-block;
 	padding: 1rem 2rem;
 	cursor: pointer;
+	font-weight: 500;
 	border-radius: 8px;
 	transition: all 0.3s;
 }
-
 .custom-file-upload:hover {
-	border-color: #42b983;
-	color: #42b983;
+	border-color: #d0bcff;
+	color: #d0bcff;
 }
 
 .threshold-section {
