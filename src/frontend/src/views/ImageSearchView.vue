@@ -44,7 +44,7 @@
 		</div>
 		
 		<div v-else-if="searched && results.length === 0" class="no-results">
-			Tidak ada buku yang ditemukan yang sesuai kriteria.
+			Tidak ada buku yang ditemukan yang mirip.
 		</div>
 	</div>
 </template>
