@@ -19,7 +19,7 @@ def create_app():
     pipeline = Preprocessing(data_dir=DATA_DIR, cache_dir="./cache", k=100)
     pipeline.initialize()
 
-    pca_pipeline = PCAPreprocessing(data_dir=DATA_DIR, cache_dir="./cache_pca", k=65)
+    pca_pipeline = PCAPreprocessing(data_dir=DATA_DIR, cache_dir="./cache_pca", k=100)
     pca_pipeline.initialize()
 
     @app.route('/')
