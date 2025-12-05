@@ -111,6 +111,10 @@ const searchImage = async () => {
 h1, h2 {
 	color: #f7f2fa;
 }
+.no-results {
+	color: #E6E0E9;
+	font-size: 1.5rem;
+}
 
 .image-search {
 	max-width: 1200px;
