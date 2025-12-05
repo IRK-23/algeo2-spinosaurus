@@ -13,12 +13,16 @@ class DocumentIndexer:
         self.num_terms = 0
 
     def build_vocabulary(self, preprocessed_documents: List[List[str]]) -> Dict[str, int]:
+        min_df = 2
 
-        all_terms = set()
+        term_doc_count = {}
         for doc_tokens in preprocessed_documents:
-            all_terms.update(doc_tokens)
+            unique_terms = set(doc_tokens)
+            for term in unique_terms:
+                term_doc_count[term] = term_doc_count.get(term, 0) + 1
 
-        sorted_terms = sorted(all_terms)
+        filtered_terms = [term for term, count in term_doc_count.items() if count >= min_df]
+        sorted_terms = sorted(filtered_terms)
 
         self.vocabulary = {term: idx for idx, term in enumerate(sorted_terms)}
         self.term_list = sorted_terms

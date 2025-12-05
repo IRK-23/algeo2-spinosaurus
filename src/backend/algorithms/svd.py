@@ -22,13 +22,13 @@ def svd(A: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     V = eigenvectors
 
     # rank (nonzero)
-    rank = np.sum(singular_values > 1e-10)
+    rank = np.sum(singular_values > 1e-7)
 
-    # left singular vectors 
+    # left singular vectors
     # U = A * V * (sigma)^(-1)
     U = np.zeros((m, rank))
     for i in range(rank):
-        if singular_values[i] > 1e-10:
+        if singular_values[i] > 1e-7:
             U[:, i] = (A @ V[:, i]) / singular_values[i]
 
     sigma_matrix = create_diagonal_matrix(singular_values[:rank])

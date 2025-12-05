@@ -56,7 +56,7 @@ def preprocess_documents(documents: List[str]) -> List[List[str]]:
     preprocessor = TextPreprocessor()
     preprocessed = []
 
-    for i,doc in enumerate(documents):
+    for doc in documents:
         tokens = preprocessor.preprocess(doc)
         preprocessed.append(tokens)
        

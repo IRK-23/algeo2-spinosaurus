@@ -37,7 +37,7 @@ class PCAPreprocessing:
             })
 
         with open(os.path.join(self.cache_dir, 'books_metadata.json'), 'w', encoding='utf-8') as f:
-            json.dump(metadata, f, ensure_ascii=False, indent=2)
+            json.dump(metadata, f)
 
     def load_books_metadata(self):
         with open(os.path.join(self.cache_dir, 'books_metadata.json'), 'r', encoding='utf-8') as f:

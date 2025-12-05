@@ -21,24 +21,7 @@ class PCA:
 		with open(mapper_path, 'r', encoding='utf-8') as f:
 			mapper = json.load(f)
 		cover_paths = [entry["cover"] for entry in mapper.values()]
-
-		# RGB flattened
-		# datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT * 3, self.N_ENTRIES))
-		# for x in range(min(self.N_ENTRIES, len(cover_paths))):
-		# 	img_path = os.path.join(data_dir, cover_paths[x])
-		# 	img = Image.open(img_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-		# 	imageMatrix = np.array(img)
-		# 	datasetMatrix[:, x] = imageMatrix.flatten()
-
-		# Grayscale (PIL built-in)
-		# datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT, self.N_ENTRIES))
-		# for x in range(min(self.N_ENTRIES, len(cover_paths))):
-		# 	img_path = os.path.join(data_dir, cover_paths[x])
-		# 	img = Image.open(img_path).convert('L').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-		# 	imageMatrix = np.array(img)
-		# 	datasetMatrix[:, x] = imageMatrix.flatten()
-
-		# Grayscale (manual)
+	
 		datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT, self.N_ENTRIES))
 		for x in range(min(self.N_ENTRIES, len(cover_paths))):
 			img_path = os.path.join(data_dir, cover_paths[x])
@@ -50,7 +33,12 @@ class PCA:
 					datasetMatrix[iter, x] = 0.2126 * z[0] + 0.7152 * z[1] + 0.0722 * z[2]
 					iter += 1
 
-		self.u = np.mean(datasetMatrix, axis=1)
+		self.u = np.zeros(self.IMG_WIDTH * self.IMG_HEIGHT)
+		for x in range(self.N_ENTRIES):
+			for y in range(self.IMG_WIDTH * self.IMG_HEIGHT):
+				self.u[y] += datasetMatrix[y, x]
+		self.u /= self.N_ENTRIES
+  
 		datasetMatrix = datasetMatrix.T
 		for x in range(datasetMatrix.shape[0]):
 			datasetMatrix[x] -= self.u
@@ -63,17 +51,6 @@ class PCA:
 		return self
 
 	def process_uploaded_image(self, image_path):
-		# RGB flattened
-		# img = Image.open(image_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-		# imageMatrix = np.array(img)
-		# img_vector = imageMatrix.flatten()
-
-		# Grayscale (PIL built-in)
-		# img = Image.open(image_path).convert('L').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-		# imageMatrix = np.array(img)
-		# img_vector = imageMatrix.flatten()
-
-		# Grayscale (manual)
 		img = Image.open(image_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
 		imageMatrix = np.array(img)
 		img_vector = np.zeros(self.IMG_WIDTH * self.IMG_HEIGHT)

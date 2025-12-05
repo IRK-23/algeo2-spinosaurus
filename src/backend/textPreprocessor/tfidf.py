@@ -1,6 +1,5 @@
 import numpy as np
 from scipy.sparse import csr_matrix
-from typing import Tuple
 
 
 class Tfidf:
@@ -37,11 +36,15 @@ class Tfidf:
     def fit_transform(self, term_doc_matrix: csr_matrix) -> csr_matrix:
         return self.fit(term_doc_matrix).transform(term_doc_matrix)
 
+    def transform_query(self, query_vector: np.ndarray) -> np.ndarray:
+        total_terms = np.sum(query_vector)
+        if total_terms == 0:
+            total_terms = 1
 
-def compute_tfidf(term_doc_matrix: csr_matrix) -> Tuple[csr_matrix, np.ndarray]:
-    tfidf = Tfidf()
-    tfidf_matrix = tfidf.fit_transform(term_doc_matrix)
-    return tfidf_matrix, tfidf.idf_vector
+        tf_vector = query_vector / total_terms
+        tfidf_vector = tf_vector * self.idf_vector
+
+        return tfidf_vector
 
 
 
