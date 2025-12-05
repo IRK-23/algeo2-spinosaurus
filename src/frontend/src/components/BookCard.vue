@@ -29,7 +29,7 @@ const router = useRouter();
 
 const imageUrl = computed(() => {
 	if (!props.book.cover) return 'https://via.placeholder.com/200x300?text=No+Cover';
-	return `http://127.0.0.1:5000/data/${props.book.cover}`;
+	return `http://localhost:5000/data/${props.book.cover}`;
 });
 
 const handleImageError = (e) => {
@@ -43,7 +43,7 @@ const goToDetail = () => {
 
 <style scoped>
 .book-card {
-	border: 1px solid #e0e0e0;
+	border: 1px solid #938F99;
 	border-radius: 12px;
 	overflow: hidden;
 	cursor: pointer;

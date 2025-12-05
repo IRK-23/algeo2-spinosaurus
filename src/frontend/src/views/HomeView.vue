@@ -70,7 +70,7 @@ const fetchBooks = async () => {
 			search: searchQuery.value
 		}).toString();
 		
-		const response = await fetch(`http://127.0.0.1:5000/api/books?${query}`);
+		const response = await fetch(`http://localhost:5000/api/books?${query}`);
 		const data = await response.json();
 		
 		books.value = data.books;
@@ -114,7 +114,7 @@ onMounted(() => {
 
 h1 {
 	font-size: 2.5rem;
-	color: #F7F2FA;
+	color: #f7f2fa;
 	margin-bottom: 1.5rem;
 }
 
@@ -167,11 +167,11 @@ button {
 	cursor: pointer;
 }
 
-button:hover {
+.m3-btn:hover {
 	background-color: #B69DF8;
 }
 
-button:disabled {
+.m3-btn:disabled {
 	background-color: #CCC2DC;
 	color: #332D41;
 	cursor: not-allowed;

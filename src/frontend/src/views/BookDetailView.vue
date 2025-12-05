@@ -43,19 +43,19 @@ const loadingRecs = ref(false);
 
 const imageUrl = computed(() => {
 	if (!book.value || !book.value.cover) return 'https://via.placeholder.com/300x450?text=No+Cover';
-	return `http://127.0.0.1:5000/data/${book.value.cover}`;
+	return `http://localhost:5000/data/${book.value.cover}`;
 });
 
 const fetchBook = async (id) => {
 	loading.value = true;
     bookContent.value = '';
 	try {
-		const response = await fetch(`http://127.0.0.1:5000/api/books/${id}`);
+		const response = await fetch(`http://localhost:5000/api/books/${id}`);
 		if (response.ok) {
 			book.value = await response.json();
 
             if (book.value.txt) {
-                fetch(`http://127.0.0.1:5000/data/${book.value.txt}`)
+                fetch(`http://localhost:5000/data/${book.value.txt}`)
                     .then(res => res.text())
                     .then(text => bookContent.value = text)
                     .catch(err => console.error('Error loading text:', err));
@@ -73,7 +73,7 @@ const fetchBook = async (id) => {
 const fetchRecommendations = async (id) => {
 	loadingRecs.value = true;
 	try {
-		const response = await fetch(`http://127.0.0.1:5000/api/books/${id}/recommendations`);
+		const response = await fetch(`http://localhost:5000/api/books/${id}/recommendations`);
 		const data = await response.json();
 		recommendations.value = data.recommendations;
 	} catch (error) {
@@ -131,7 +131,8 @@ h1 {
 }
 
 .content-preview {
-	background: #f9f9f9;
+	background: #211F26;
+	color: #f7f2fa;
 	padding: 2rem;
 	border-radius: 12px;
 }
@@ -141,9 +142,9 @@ h1 {
     font-family: monospace;
     max-height: 500px;
     overflow-y: auto;
-    background: #fff;
+    background: #211F26;
     padding: 1rem;
-    border: 1px solid #eee;
+    border: 1px solid #938F99;
     border-radius: 4px;
 }
 

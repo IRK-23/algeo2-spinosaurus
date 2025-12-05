@@ -1,13 +1,15 @@
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from .lsa.preprocessing import Preprocessing
+from .pca.preprocessing import PCAPreprocessing
 import json
 import os
 
 pipeline = None
+pca_pipeline = None
 
 def create_app():
-    global pipeline
+    global pipeline, pca_pipeline
     app = Flask(__name__)
     CORS(app)
 
@@ -16,6 +18,9 @@ def create_app():
 
     pipeline = Preprocessing(data_dir=DATA_DIR, cache_dir="./cache", k=100)
     pipeline.initialize()
+
+    pca_pipeline = PCAPreprocessing(data_dir=DATA_DIR, cache_dir="./cache_pca", k=100)
+    pca_pipeline.initialize()
 
     @app.route('/')
     def hello():
@@ -60,18 +65,24 @@ def create_app():
     def serve_data(filename):
         return send_from_directory(DATA_DIR, filename)
 
-    # Sementara dulu, karena blm ada implementasi PCA dan LSA
     @app.route('/api/search/image', methods=['POST'])
     def search_by_image():
-        # Placeholder sementara PCA image search
-        # Seharusnya ini memproses gambar yg diupload
-        # Utk sementara return buku random
-        import random
-        results = random.sample(pipeline.books, min(len(pipeline.books), 5)) if pipeline.books else []
-        # Similarity score sementara/dummy
-        for res in results:
-            res['similarity'] = round(random.uniform(0.7, 0.99), 2)
-        return jsonify({'results': results})
+        if 'image' not in request.files:
+            return jsonify({'error': 'No image file'}), 400
+
+        file = request.files['image']
+        if file.filename == '':
+            return jsonify({'error': 'No image file'}), 400
+
+        temp_path = os.path.join('/tmp', file.filename)
+        file.save(temp_path)
+
+        try:
+            results = pca_pipeline.get_similar_books_by_uploaded_image(temp_path, top_k=5)
+            return jsonify({'results': results})
+        finally:
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
 
     @app.route('/api/books/<book_id>/recommendations', methods=['GET'])
     def get_recommendations(book_id):
