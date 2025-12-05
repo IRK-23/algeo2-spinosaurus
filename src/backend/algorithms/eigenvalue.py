@@ -35,7 +35,7 @@ def qr_decomposition(A: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
             v = v - R[i, j] * Q[:, i]
 
         R[j, j] = vector_length(v)
-        if R[j, j] > 1e-10:
+        if R[j, j] > 1e-7:
             Q[:, j] = v / R[j, j]
         else:
             Q[:, j] = v
@@ -43,7 +43,7 @@ def qr_decomposition(A: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     return Q, R
 
 
-def qr_algorithm(A: np.ndarray, max_iter: int = 1000, tol: float = 1e-10) -> Tuple[np.ndarray, np.ndarray]: #aproksimasi
+def qr_algorithm(A: np.ndarray, max_iter: int = 1000, tol: float = 1e-7) -> Tuple[np.ndarray, np.ndarray]: #aproksimasi
     n = A.shape[0]
     A_k = A.copy()
     Q_total = np.eye(n)

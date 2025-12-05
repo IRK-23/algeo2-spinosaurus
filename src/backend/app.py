@@ -67,8 +67,6 @@ def create_app():
 
     @app.route('/api/search/image', methods=['POST'])
     def search_by_image():
-        if 'image' not in request.files:
-            return jsonify({'error': 'No image file'}), 400
 
         file = request.files['image']
         if file.filename == '':
@@ -83,6 +81,18 @@ def create_app():
         finally:
             if os.path.exists(temp_path):
                 os.remove(temp_path)
+
+    @app.route('/api/search/document', methods=['POST'])
+    def search_by_document():
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({'error': 'No file provided'}), 400
+
+        document_text = file.read().decode()
+        top_k = int(request.form.get('top_k', 5))
+
+        results = pipeline.search_by_document(document_text, top_k=top_k)
+        return jsonify({'results': results})
 
     @app.route('/api/books/<book_id>/recommendations', methods=['GET'])
     def get_recommendations(book_id):
@@ -99,5 +109,5 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=5000)
 
