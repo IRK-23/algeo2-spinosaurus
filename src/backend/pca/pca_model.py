@@ -23,12 +23,12 @@ class PCA:
 		cover_paths = [entry["cover"] for entry in mapper.values()]
 
 		# RGB flattened
-		datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT * 3, self.N_ENTRIES))
-		for x in range(min(self.N_ENTRIES, len(cover_paths))):
-			img_path = os.path.join(data_dir, cover_paths[x])
-			img = Image.open(img_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-			imageMatrix = np.array(img)
-			datasetMatrix[:, x] = imageMatrix.flatten()
+		# datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT * 3, self.N_ENTRIES))
+		# for x in range(min(self.N_ENTRIES, len(cover_paths))):
+		# 	img_path = os.path.join(data_dir, cover_paths[x])
+		# 	img = Image.open(img_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
+		# 	imageMatrix = np.array(img)
+		# 	datasetMatrix[:, x] = imageMatrix.flatten()
 
 		# Grayscale (PIL built-in)
 		# datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT, self.N_ENTRIES))
@@ -39,16 +39,16 @@ class PCA:
 		# 	datasetMatrix[:, x] = imageMatrix.flatten()
 
 		# Grayscale (manual)
-		# datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT, self.N_ENTRIES))
-		# for x in range(min(self.N_ENTRIES, len(cover_paths))):
-		# 	img_path = os.path.join(data_dir, cover_paths[x])
-		# 	img = Image.open(img_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-		# 	imageMatrix = np.array(img)
-		# 	iter = 0
-		# 	for y in imageMatrix.T:
-		# 		for z in y:
-		# 			datasetMatrix[iter, x] = 0.2126 * z[0] + 0.7152 * z[1] + 0.0722 * z[2]
-		# 			iter += 1
+		datasetMatrix = np.zeros((self.IMG_WIDTH * self.IMG_HEIGHT, self.N_ENTRIES))
+		for x in range(min(self.N_ENTRIES, len(cover_paths))):
+			img_path = os.path.join(data_dir, cover_paths[x])
+			img = Image.open(img_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
+			imageMatrix = np.array(img)
+			iter = 0
+			for y in imageMatrix:
+				for z in y:
+					datasetMatrix[iter, x] = 0.2126 * z[0] + 0.7152 * z[1] + 0.0722 * z[2]
+					iter += 1
 
 		self.u = np.mean(datasetMatrix, axis=1)
 		datasetMatrix = datasetMatrix.T
@@ -64,9 +64,9 @@ class PCA:
 
 	def process_uploaded_image(self, image_path):
 		# RGB flattened
-		img = Image.open(image_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-		imageMatrix = np.array(img)
-		img_vector = imageMatrix.flatten()
+		# img = Image.open(image_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
+		# imageMatrix = np.array(img)
+		# img_vector = imageMatrix.flatten()
 
 		# Grayscale (PIL built-in)
 		# img = Image.open(image_path).convert('L').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
@@ -74,14 +74,14 @@ class PCA:
 		# img_vector = imageMatrix.flatten()
 
 		# Grayscale (manual)
-		# img = Image.open(image_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
-		# imageMatrix = np.array(img)
-		# img_vector = np.zeros(self.IMG_WIDTH * self.IMG_HEIGHT)
-		# iter = 0
-		# for y in imageMatrix.T:
-		# 	for z in y:
-		# 		img_vector[iter] = 0.2126 * z[0] + 0.7152 * z[1] + 0.0722 * z[2]
-		# 		iter += 1
+		img = Image.open(image_path).convert('RGB').resize((self.IMG_WIDTH, self.IMG_HEIGHT))
+		imageMatrix = np.array(img)
+		img_vector = np.zeros(self.IMG_WIDTH * self.IMG_HEIGHT)
+		iter = 0
+		for y in imageMatrix:
+			for z in y:
+				img_vector[iter] = 0.2126 * z[0] + 0.7152 * z[1] + 0.0722 * z[2]
+				iter += 1
 
 		img_vector = img_vector - self.u
 		img_coeffs = np.matmul(self.uMatrix.T, img_vector)

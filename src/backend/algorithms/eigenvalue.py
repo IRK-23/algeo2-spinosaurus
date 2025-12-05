@@ -2,8 +2,11 @@ import numpy as np
 from typing import Tuple
 
 
+# def vector_length(v: np.ndarray) -> float:
+#     return np.sqrt(np.dot(v, v))
+
 def vector_length(v: np.ndarray) -> float:
-    return np.sqrt(np.dot(v, v))
+    return np.linalg.norm(v)
 
 
 def create_diagonal_matrix(diagonal_values: np.ndarray) -> np.ndarray:
