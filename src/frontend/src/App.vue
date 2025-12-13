@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HomeIcon from '@/assets/home.svg'
 import ImageSearchIcon from '@/assets/image_search.svg'
+import DocumentSearchIcon from '@/assets/document_search.svg'
 </script>
 
 <template>
@@ -19,6 +20,12 @@ import ImageSearchIcon from '@/assets/image_search.svg'
 						<img :src="ImageSearchIcon" alt="Image Search" class="nav-icon" />
 					</div>
 					<span>Image Search</span>
+				</RouterLink>
+				<RouterLink to="/search-document">
+					<div class="icon-container">
+						<img :src="DocumentSearchIcon" alt="Document Search" class="nav-icon" />
+					</div>
+					<span>Document Search</span>
 				</RouterLink>
 			</nav>
 		</div>
