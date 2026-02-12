@@ -4,6 +4,7 @@ from .lsa.preprocessing import Preprocessing
 from .pca.preprocessing import PCAPreprocessing
 import json
 import os
+import tempfile
 
 pipeline = None
 pca_pipeline = None
@@ -72,7 +73,8 @@ def create_app():
         if file.filename == '':
             return jsonify({'error': 'No image file'}), 400
 
-        temp_path = os.path.join('/tmp', file.filename)
+        temp_dir = tempfile.gettempdir()
+        temp_path = os.path.join(temp_dir, file.filename)
         file.save(temp_path)
 
         try:
